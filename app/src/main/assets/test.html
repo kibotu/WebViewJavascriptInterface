@@ -5,7 +5,53 @@
 </head>
 <body>
 <button type="button" onclick="App.backPress()" class="btn">Backpress</button>
+<br/>
+
 <button type="button" onclick="App.close()" class="btn">Close</button>
+<br/>
+
+<button type="button" onclick="showVersionName()" class="btn">Version Name</button>
+<i id="versionNameLabel"></i> <br/>
+
+<button type="button" onclick="showVersionCode()" class="btn">Version Code</button>
+<i id="versionCodeLabel"></i> <br/>
+
+<button type="button" onclick="storePreferences()" class="btn">Store</button>
+
+<button type="button" onclick="loadPreferences()" class="btn">Load</button>
+<i id="loadLabel"></i> <br/>
+
+<button type="button" onclick="loadPreferenceWithCallback()" class="btn">Load (Callback)</button>
+<i id="loadCallbackLabel"></i> <br/>
+
+<script>
+
+    function showVersionName() {
+         document.getElementById('versionNameLabel').innerText = App.versionName();
+    }
+
+    function showVersionCode() {
+       document.getElementById('versionCodeLabel').innerText = App.versionCode();
+    }
+
+    function storePreferences() {
+        App.storePreference("myKey", "myValue" + Math.floor((Math.random() * 10) + 1));
+    }
+
+    function loadPreferences() {
+        document.getElementById('loadLabel').innerText = App.loadPreference("myKey", "");
+    }
+
+    function setLoadCallbackLabel(value) {
+         document.getElementById('loadCallbackLabel').innerText = value;
+    }
+
+    function loadPreferenceWithCallback() {
+        App.loadPreferenceWithCallback("myKey", "", 'setLoadCallbackLabel');
+    }
+
+
+</script>
 
 </body>
 </html>

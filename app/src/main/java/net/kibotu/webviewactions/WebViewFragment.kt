@@ -33,7 +33,7 @@ class WebViewFragment : Fragment() {
             WebView.setWebContentsDebuggingEnabled(true)
         }
 
-        webView.addJavascriptInterface(WebAppInterface(), "App")
+        webView.addJavascriptInterface(WebAppInterface(webView), "App")
         webView.loadUrl("file:///android_asset/test.html")
     }
 }

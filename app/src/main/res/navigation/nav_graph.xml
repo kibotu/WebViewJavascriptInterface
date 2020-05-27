@@ -3,7 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/WebViewFragment">
+    app:startDestination="@id/FirstFragment">
+
+    <fragment
+        android:id="@+id/FirstFragment"
+        android:name="net.kibotu.webviewactions.FirstFragment"
+        android:label="@string/first_fragment"
+        tools:layout="@layout/fragment_firstfragment">
+        <action
+            android:id="@+id/action_FirstFragment_to_WebViewFragment"
+            app:destination="@id/WebViewFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/WebViewFragment"
