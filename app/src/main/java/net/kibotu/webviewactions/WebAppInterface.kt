@@ -2,12 +2,15 @@ package net.kibotu.webviewactions
 
 import android.content.Context
 import android.os.Build
+import android.util.Log
 import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import androidx.annotation.RequiresApi
 import com.github.florent37.application.provider.ActivityProvider.currentActivity
 import com.github.florent37.application.provider.application
 import java.lang.ref.WeakReference
+import java.util.concurrent.ConcurrentLinkedDeque
+import java.util.concurrent.ConcurrentLinkedQueue
 
 
 class WebAppInterface(webView: WebView) {
@@ -80,6 +83,36 @@ class WebAppInterface(webView: WebView) {
             }
         }
     }
+
+    @RequiresApi(Build.VERSION_CODES.KITKAT)
+    @JavascriptInterface
+    fun postMessageWithCallback(content: String, callback: String? = null) {
+        Log.wtf("WebAppInterface", content)
+        webView?.post {
+            webView?.evaluateJavascript("$callback();") {
+                // callback result if there is any
+                Log.wtf("WebAppInterface", "done")
+            }
+        }
+    }
+
+    val queue = ConcurrentLinkedQueue<String>()
+
+    @JavascriptInterface
+    fun postMessage(content: String) {
+        Log.wtf("WebAppInterface", "content: $content")
+        queue.add(content)
+
+        processQueue()
+    }
+
+    private fun processQueue() {
+        while(!queue.isEmpty()) {
+            val command = queue.poll()
+            // runCommand(command)
+        }
+    }
+
 
     companion object {
         /**

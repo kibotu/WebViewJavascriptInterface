@@ -24,6 +24,9 @@
 <button type="button" onclick="loadPreferenceWithCallback()" class="btn">Load (Callback)</button>
 <i id="loadCallbackLabel"></i> <br/>
 
+<button type="button" onclick="postMessageTest()" class="btn">Post Message Test</button>
+<i id="callbackLabel"></i> <br/>
+
 <script>
 
     function showVersionName() {
@@ -48,6 +51,38 @@
 
     function loadPreferenceWithCallback() {
         App.loadPreferenceWithCallback("myKey", "", 'setLoadCallbackLabel');
+    }
+
+    let content =  {
+      data: [
+        {
+          action: "TOKEN_LOGIN",
+          content: "xyz",
+          order: 0
+        },
+        {
+          action: "SHOW_INBOX",
+          content: true,
+          order: 2
+        },
+        {
+          action: "CLOSE_WEBVIEW",
+          content: true,
+          order: 1
+        }
+      ]
+    };
+
+    function postMessageTest() {
+        App.postMessage(JSON.stringify(content));
+    }
+
+    function postMessageWithCallbackTest() {
+        App.postMessageWithCallback(content, 'donePostingMessage');
+    }
+
+    function donePostingMessage() {
+         document.getElementById('callbackLabel').innerText = "done";
     }
 
 
