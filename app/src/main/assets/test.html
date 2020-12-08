@@ -75,10 +75,7 @@
 
     function postMessageTest() {
         App.postMessage(JSON.stringify(content));
-    }
-
-    function postMessageWithCallbackTest() {
-        App.postMessageWithCallback(content, 'donePostingMessage');
+        App.postMessage(JSON.stringify(content), 'donePostingMessage');
     }
 
     function donePostingMessage() {

@@ -98,12 +98,28 @@ class WebAppInterface(webView: WebView) {
 
     val queue = ConcurrentLinkedQueue<String>()
 
+    @RequiresApi(Build.VERSION_CODES.KITKAT)
     @JavascriptInterface
     fun postMessage(content: String) {
         Log.wtf("WebAppInterface", "content: $content")
         queue.add(content)
+        processQueue()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.KITKAT)
+    @JavascriptInterface
+    fun postMessage(content: String, callback: String? = null) {
+        Log.wtf("WebAppInterface", "content: $content")
+        queue.add(content)
 
         processQueue()
+
+        webView?.post {
+            webView?.evaluateJavascript("$callback();") {
+                // callback result if there is any
+                Log.wtf("WebAppInterface", "done")
+            }
+        }
     }
 
     private fun processQueue() {
